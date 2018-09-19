@@ -1,0 +1,186 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <link rel="stylesheet" href="../css/live.css">
+    <title>title</title>
+
+
+    <script type="text/javascript" src="../script/vue.js" ></script>
+
+</head>
+<body>
+
+  <div id="livetop" class="live-top">
+    <!--<div class="live-top-r" tapmode onclick="closeWin()">
+      <img src="../image/guanbi.png">
+    </div>-->
+    <div class="live-top-box">
+
+      <img id="pic" class="live-top-box-img" src="../image/error-img.jpg">
+      <div id="name" class="live-top-box-name">
+        MG
+      </div>
+    </div>
+
+  </div>
+  <div id="livebt" class="live-bt">
+  </div>
+  <div id="vue-content">
+      <div id="mengban" style="text-align: center;" :class="giftName">
+          <img src="../image/" alt="" style="width: 50%;margin-top: 70px;"/>
+      </div>
+      <div class="wrap">
+          <ul>
+              <li class="announcement" v-html="announcement"></li>
+          </ul>
+          <div id="message">
+              <ul id="inputUl">
+
+                  <li v-for="item in inputList" class="message-list"> <span class="nickname">{{nickname}} </span>: {{item}}</li>
+
+              </ul>
+          </div>
+      </div>
+
+      <div id="livebtn">
+          <input id="inputV" v-model="inputValue" type="text"/>
+          <div class="live-bt-r" tapmode onclick="closeWin()">
+              <img src="../image/guanbi.png">
+          </div>
+          <div class="live-btn-m">
+              <div class="m"> <img src="../image/love.png" class="journal-reward" /> </div>
+          </div>
+
+          <div @click="giftClick" class="live-btn-l">
+              <img src="../image/gift.png">
+          </div>
+
+          <div class="live-btn-r"  @click="handelClick">
+              <img src="../image/fasong.png">
+          </div>
+
+      </div>
+  </div>
+
+</body>
+<script>
+    new Vue({
+        el:"#vue-content",
+        data:{
+            giftName:"",
+            height:"",
+            inputValue:"",
+            nickname:"MG",
+            inputList:[],
+            announcement:"系统消息:欢迎来到直播间.请勿相信直播间广告，上当受骗后果自负，祝君愉快玩耍，细细品味。"
+        },
+        methods:{
+            handelClick:function(){
+                this.inputList.push(this.inputValue);
+                this.inputValue="";
+                var height1=document.getElementById("inputUl").offsetHeight;
+                var height2=document.getElementById("message").offsetHeight;
+                var height = height2-height1-24;
+//                console.log(height);
+                if(height<=0){
+                    document.getElementById("inputUl").style.marginTop = height+"px";
+                }
+
+            },
+            giftClick:function(){
+                if(this.giftName==""){
+                    this.giftName="active";
+                }else{
+                    this.giftName="";
+                }
+
+            }
+        }
+    })
+</script>
+<script type="text/javascript" src="../script/api.js" ></script>
+<script type="text/javascript">
+    apiready = function(){
+
+      api.setStatusBarStyle({
+          style: 'light',
+          color: 'rgba(0,0,0,0)'
+      });
+
+      api.parseTapmode();
+      var pic = $api.byId('pic');
+      var name = $api.byId('name');
+      pic.src = api.pageParam.pic;
+      name.innerHTML = api.pageParam.name;
+    }
+
+
+
+    function closeWin(){
+
+      api.closeWin({
+      });
+    }
+
+    function toJubao(){
+      api.toast({
+          msg: '我们已收到您对该房间内容的举报，并推送您的举报信息到运营商和云服务提供商！',
+          duration: 3000,
+          location: 'middle'
+      });
+
+    }
+
+
+</script>
+<script src="http://www.jq22.com/jquery/jquery-2.1.1.js" type="text/javascript" charset="utf-8"></script>
+<script src="../script/flutter-hearts-zmt.js" type="text/javascript" charset="utf-8"></script>
+<script>
+    function addMsg (){
+        var testData=[
+            "<li class='message-list' id='addMsg'><span class='nickname'>愤怒的萝卜1 </span>: 处处好风光1</li>",
+            "<li class='message-list' id='addMsg'><span class='nickname'>伴我多久@ </span>: 飞流直下三千尺。</li>",
+			"<li class='message-list' id='addMsg'><span class='nickname'>单身们雄起啊 </span>: ，疑是银河落九天</li>",
+			"<li class='message-list' id='addMsg'><span class='nickname'>处女有多少 </span>: 一树梨花压海棠1</li>",
+			"<li class='message-list' id='addMsg'><span class='nickname'>14岁的恋是叛逆 </span>: 温柔情窝万骨冢1</li>",
+			"<li class='message-list' id='addMsg'><span class='nickname'>薄荷微光少年时 </span>: 解带宽衣唇留香1</li>",
+			"<li class='message-list' id='addMsg'><span class='nickname'>久了就旧了o </span>: 停车坐爱枫林晚.1</li>",
+			"<li class='message-list' id='addMsg'><span class='nickname'>呆橘@ </span>: 日破云涛万里红1</li>",
+			"<li class='message-list' id='addMsg'><span class='nickname'>孤独是全感  </span>: 操操1</li>",
+			"<li class='message-list' id='addMsg'><span class='nickname'>@紧拥我 </span>: 干死他</li>",
+			"<li class='message-list' id='addMsg'><span class='nickname'>你说和她勾搭, </span>: 弄死1</li>",
+			"<li class='message-list' id='addMsg'><span class='nickname'>韩力扮都是小三, </span>: 好多水1</li>",
+			"<li class='message-list' id='addMsg'><span class='nickname'>@心软不治要命 </span>: 这个会员值了1</li>",
+			"<li class='message-list' id='addMsg'><span class='nickname'>你别哭了好丑 </span>: 鸡鸡好大1</li>",
+			"<li class='message-list' id='addMsg'><span class='nickname'>夜未央い雪落成殇 </span>: 主播好美哦1</li>",
+			"<li class='message-list' id='addMsg'><span class='nickname'>我不是她 </span>: 处处好风光1</li>",
+			"<li class='message-list' id='addMsg'><span class='nickname'>刺青爱人。 </span>: 日死你1</li>",
+			"<li class='message-list' id='addMsg'><span class='nickname'>没了强觉得很空 </span>: 不会吧1</li>",
+			"<li class='message-list' id='addMsg'><span class='nickname'>久病成伤百病不渝 </span>: 极尽诋毁独家1</li>",
+			"<li class='message-list' id='addMsg'><span class='nickname'>襙她你爽了吗 </span>: 美死了1</li>",
+			"<li class='message-list' id='addMsg'><span class='nickname'>我不是故意错过你 </span>: 外国妞吗1</li>",
+			"<li class='message-list' id='addMsg'><span class='nickname'>爱4消失在这个夏天 </span>: 停车做爱枫林晚1</li>",
+			"<li class='message-list' id='addMsg'><span class='nickname'>我媳说试探我 </span>: 但是不会遇到1</li>",
+			"<li class='message-list' id='addMsg'><span class='nickname'>小时代3袁珊珊毁了 </span>: 约么1</li>",
+			"<li class='message-list' id='addMsg'><span class='nickname'>男友名蜜的解锁码 </span>: 在哪里1</li>",
+        ];//假数据修改
+        var b =testData.length;
+        var a =parseInt(Math.random()*b);
+        var testD = testData[a];
+        $("#inputUl").append(testD);
+        var height1=$("#inputUl").height();
+        var height2=$("#message").height();
+        var height = height2-height1-24;
+//        console.log(height);
+        if(height<=0){
+            $("#inputUl").css("margin-top",height);
+        }
+    }
+    setInterval(addMsg,6000);//时间设置
+
+
+</script>
+</html>

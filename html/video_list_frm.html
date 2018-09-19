@@ -1,0 +1,237 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../css/aui.css" />
+    <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/iconfont.css"/>
+</head>
+<body>
+ <iframe runat="server" src="http://www.baidu.com" width="100%" height="100%" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes"></iframe>
+</body>
+
+
+
+
+  var api_url = localStorage.getItem('api_url');
+
+  var i = 1;
+	apiready = function(){
+    api.showProgress({
+        title: '努力加载中...',
+        text: '福利正在赶路...',
+        modal: false
+    });
+    newData();
+    api.addEventListener({
+        name: 'getData'
+    }, function(ret, err) {
+      if (ret) {
+        newData();
+        location.reload();
+      }
+    });
+		api.parseTapmode();
+
+    api.setRefreshHeaderInfo({
+        visible: true,
+        loadingImg: 'widget://image/refresh.png',
+        bgColor: '#fff',
+        textColor: '#333',
+        textDown: '下拉刷新...',
+        textUp: '松开刷新...',
+        showTime: true
+    }, function(ret, err){
+      if (err) {
+        api.toast({
+            msg: '加载数据失败',
+            duration: 2000,
+            location: 'middle'
+        });
+        api.refreshHeaderLoadDone();
+      }else {
+        api.showProgress({
+            title: '努力加载中...',
+            text: '福利正在赶路...',
+            modal: false
+        });
+        newData();
+
+
+      }
+    });
+
+
+    api.addEventListener({
+        name:'scrolltobottom',
+        extra:{
+            threshold:0
+        }
+    }, function(ret, err){
+      showData();
+    });
+
+
+	}
+
+
+  function newData(){
+    i = 1;
+    var div_list = $api.byId('div_list');
+    var template = $api.byId('template');
+    api.ajax({
+        url: api_url+'/login/login/video.html',
+        method: 'get'
+    },function(ret, err){
+        if (ret) {
+          if (ret.code == 0) {
+            api.toast({
+                msg: '暂无数据',
+                duration: 1000,
+                location: 'middle'
+            });
+            api.hideProgress();
+            api.refreshHeaderLoadDone();
+          }else {
+            //渲染模板
+            var pagefn = doT.template(template.text);
+            div_list.innerHTML = pagefn(ret);
+            api.hideProgress();
+            api.refreshHeaderLoadDone();
+          }
+        } else {
+          api.toast({
+              msg: '网络错误',
+              duration: 1000,
+              location: 'middle'
+          });
+          api.hideProgress();
+          api.refreshHeaderLoadDone();
+        }
+    });
+
+
+  }
+
+  function showData(){
+    i = i+1;
+    var div_list = $api.byId('div_list');
+    var template = $api.byId('template');
+    api.ajax({
+        url: api_url+'/login/login/video.html',
+        method: 'get',
+        data:{
+          values:{
+            page: i
+          }
+        }
+    },function(ret, err){
+        if (ret) {
+          if (ret.code == 0) {
+            api.toast({
+                msg: '没有更多啦',
+                duration: 1000,
+                location: 'middle'
+            });
+            api.hideProgress();
+          }else {
+            //渲染模板
+            var pagefn = doT.template(template.text);
+            div_list.innerHTML += pagefn(ret);
+            api.hideProgress();
+            api.refreshHeaderLoadDone();
+          }
+        } else {
+          api.toast({
+              msg: '网络错误',
+              duration: 1000,
+              location: 'middle'
+          });
+          api.hideProgress();
+          api.refreshHeaderLoadDone();
+        }
+    });
+
+  }
+
+  function openVideo(url,name){
+    var time = localStorage.getItem('user_time');
+    var user_id = localStorage.getItem('user_id');
+    var username = localStorage.getItem('user_name');
+    var timestamp = Date.parse(new Date())/1000;
+    if (user_id>0) {
+      if (time > timestamp) {
+        playVideo(url,name);
+
+      }else if (time == -1) {
+        playVideo(url);
+      }else if (time < timestamp) {
+        alert('到期啦~官人先开个VIP哟');
+        api.openWin({
+            name: 'open_vip_win',
+            url: './open_vip_win.html',
+        });
+      }
+    }else {
+      api.alert({
+          title: '请先登录',
+          msg: '新注册用户赠送体验时长',
+      });
+      api.openWin({
+          name: 'from',
+          url: './from.html',
+      });
+    }
+  }
+
+  function playVideo(url,name){
+    var videoPlayer = api.require('videoPlayer');
+    videoPlayer.play({
+        texts: {
+            head: {
+                title: name
+            }
+        },
+        styles: {
+            head: {
+                bg: 'rgba(0.5,0.5,0.5,0.7)',
+                height: 44,
+                titleSize: 20,
+                titleColor: '#fff',
+                backSize: 20,
+                backImg: 'fs://img/back.png',
+                setSize: 18,
+                setImg: 'fs://img/set.png'
+            },
+            foot: {
+                bg: 'rgba(0.5,0.5,0.5,0.7)',
+                height: 44,
+                playSize: 20,
+                playImg: 'fs://img/back.png',
+                pauseImg: 'fs://img/back.png',
+                nextSize: 20,
+                nextImg: 'fs://img/back.png',
+                timeSize: 14,
+                timeColor: '#fff',
+                sliderImg: 'fs://img/slder.png',
+                progressColor: '#696969',
+                progressSelected: '#76EE00'
+            }
+        },
+        path: url, //（可选项）字符串类型；文档的路径，支持网络和本地（fs://）路径；默认：未传值时不播放
+        //在 android 平台上不支持 widget://
+        autoPlay: true //（可选项）布尔类型；打开时是否自动播放；默认：true（自动播放）
+    }, function(ret, err) {
+          if (ret) {
+
+          } else {
+              alert('视频走丢了~');
+              videoPlayer.close();
+          }
+      });
+  }
+  </script>
+  </html>

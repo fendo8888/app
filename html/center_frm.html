@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>title</title>
+    <link rel="stylesheet" type="text/css" href="../css/aui.css" />
+    <link rel="stylesheet" type="text/css" href="../css/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/iconfont.css"/>
+</head>
+<body>
+
+<div class="aui-timeline">
+            <div class="aui-timeline-item-header">2016年5月8日</div>
+            <div class="aui-timeline-item">
+                <div class="aui-timeline-item-label aui-bg-info text-light">NO.1</div>
+                <div class="aui-timeline-item-inner">
+                    <div class="aui-card-list">
+                        <div class="aui-card-list-header aui-border-b">
+                            <div>Demi诞生了</div>
+                            <i class="aui-iconfont aui-icon-star aui-text-danger"></i>
+                        </div>
+                        <div class="aui-card-list-content-padded">
+                            做最好、最稳定的福利资源聚合平台！
+                            <img src="../image/cent.jpg">
+                        </div>
+                        <div class="aui-card-list-footer aui-border-t aui-font-size-12">
+                            <div><i class="aui-iconfont aui-icon-note aui-font-size-14"></i> 6626</div>
+                            <div><i class="aui-iconfont aui-icon-laud aui-font-size-14"></i> 135488</div>
+                            <div><i class="aui-iconfont aui-icon-star aui-font-size-14"></i> 12675</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-timeline-item">
+                <div class="aui-timeline-item-label-icon aui-bg-danger">
+                    <i class="aui-iconfont aui-icon-like text-light"></i>
+                </div>
+                <div class="aui-timeline-item-inner">
+                    <div class="aui-card-list">
+                        <div class="aui-card-list-content-padded">
+                            Demi一直在努力，并会持久的运营下去，感谢一路有大家的陪伴！！！🌹🌹🌹🌹🌹🌹
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="aui-timeline-item">
+                <div class="aui-timeline-item-label aui-bg-warning text-light">NO.2</div>
+                <div class="aui-timeline-item-inner">
+                    <div class="aui-card-list">
+                        <div class="aui-card-list-header aui-border-b">入驻代理请联系客服</div>
+                        <div class="aui-card-list-content-padded">
+                            <div class="aui-row aui-row-padded">
+                                <div class="aui-col-xs-4">
+                                    <img src="../image/user_img.jpg" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+</body>
+<script type="text/javascript" src="../script/api.js" ></script>
+<script type="text/javascript" src="../script/doT.js" ></script>
+<script type="text/javascript">
+  var api_url = localStorage.getItem('api_url');
+
+  apiready = function(){
+
+  }
+
+
+  function openWin(name){
+        var delay = 0;
+        if(api.systemType != 'ios'){
+            delay = 300;
+        }
+        api.openWin({
+            name: ''+name+'',
+            url: ''+name+'.html',
+            bounces:false,
+            delay: delay,
+            slidBackEnabled:true,
+            vScrollBarEnabled:false
+        });
+    }
+</script>
+</html>

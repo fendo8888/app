@@ -1,0 +1,400 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <title>FM</title>
+    <link rel="stylesheet" type="text/css" href="../css/api.css" />
+	<style>
+		html,body{height: 100%;}
+		#wrap{
+			height: 100%;
+			background: url(../image/play_bg_tra.jpg) no-repeat;
+			-webkit-background-size: cover;
+			background-size: cover;
+			display: -webkit-box;
+			display: -webkit-flex;
+			display: flex;
+			-webkit-box-orient: vertical;
+			-webkit-flex-flow: column;
+			flex-flow: column;
+		}
+		#main{
+			position: relative;
+			-webkit-box-flex: 1;
+			-webkit-flex: 1;
+			flex: 1;
+		}
+		header{
+			display: -webkit-box;
+			display: -webkit-flex;
+			display: flex;
+      padding-top: 30px;
+		}
+		header div{
+			font-size: 14px; color: #fff; text-align: center;
+			line-height: 45px;
+			-webkit-box-flex: 1;
+			-webkit-flex: 1;
+			flex: 1;
+		}
+		header i{
+			display: block; width: 53px; height: 49px;
+		}
+		header .back{
+			background: url(../image/navi_back.png) no-repeat;
+			-webkit-background-size: contain;
+			background-size: contain;
+		}
+		header .more{
+			background: url(../image/navi_play_more.png) no-repeat;
+			-webkit-background-size: contain;
+			background-size: contain;
+		}
+
+		#action{
+			margin-bottom: 10px;
+			display: -webkit-box;
+			display: -webkit-flex;
+			display: flex;
+		}
+		#action li{
+			text-align: center; color: #cbcbcb; font-size: 12px;
+			-webkit-box-flex: 1;
+			-webkit-flex: 1;
+			flex: 1;
+			padding-top: 30px;
+			background-position: center top;
+			background-repeat: no-repeat;
+			-webkit-background-size: 25px;
+			background-size: 25px;
+		}
+		#action .collect{
+			background-image: url(../image/ic_play_fav.png);
+		}
+		#action .collect.focus{
+			background-image: url(../image/ic_play_fav_s.png);
+		}
+		#action .timer{
+			background-image: url(../image/ic_play_timer.png);
+		}
+		#action .timer.focus{
+			background-image: url(../image/ic_play_timer_s.png);
+		}
+		#action .share{
+			background-image: url(../image/ic_play_share.png);
+		}
+		#action .share.focus{
+			background-image: url(../image/ic_play_share_s.png);
+		}
+		#action .checkin{
+			background-image: url(../image/ic_play_checkin.png);
+		}
+		#action .checkin.focus{
+			background-image: url(../image/ic_play_checkin_s.png);
+		}
+		#control{
+			background-color: #672d32;
+		}
+		#slider{height: 50px; position: relative;}
+		#slider span{
+			position: absolute; bottom: 0; font-size: 12px; color: #ccc;
+		}
+		#slider .s{
+			left: 10px;
+		}
+		#slider .e{
+			right: 10px;
+		}
+		#panel{
+			display: -webkit-box;
+			display: -webkit-flex;
+			display: flex;
+			padding: 30px 0 60px;
+		}
+		#panel li{
+			width: 30px; height: 30px;
+			-webkit-box-flex: 1;
+			-webkit-flex: 1;
+			flex: 1;
+			background-position: center;
+			background-repeat: no-repeat;
+			-webkit-background-size: 30px;
+			background-size: 30px;
+		}
+		#panel .list{
+			background-image: url(../image/ic_play_schedule.png);
+			-webkit-background-size: 25px;
+			background-size: 25px;
+		}
+		#panel .list.focus{
+			background-image: url(../image/ic_play_schedule_s.png);
+		}
+		#panel .prev{
+			background-image: url(../image/ic_play_pre.png);
+		}
+		#panel .prev.focus{
+			background-image: url(../image/ic_play_pre_s.png);
+		}
+		#panel .play{
+			background-image: url(../image/ic_play_play.png);
+		}
+		#panel .play.focus{
+			background-image: url(../image/ic_play_play_s.png);
+		}
+		#panel .pause{
+			background-image: url(../image/ic_play_pause.png);
+		}
+		#panel .pause.focus{
+			background-image: url(../image/ic_play_pause_s.png);
+		}
+		#panel .buffer{
+			background-image: none;
+		}
+		@-webkit-keyframes rotate{
+			from{
+				-webkit-transform: rotate(0deg);
+			}
+			to{
+				-webkit-transform: rotate(360deg);
+			}
+		}
+		@keyframes rotate{
+			from{
+				transform: rotate(0deg);
+			}
+			to{
+				transform: rotate(360deg);
+			}
+		}
+		#panel .buffer:before{
+			content: '';
+			display: inline-block; width: 100%; height: 100%;
+			background: url(../image/ic_play_buffer.png) no-repeat center;
+			-webkit-background-size: contain;
+			background-size: contain;
+			-webkit-animation: rotate 4s linear infinite;
+			animation: rotate 4s linear infinite;
+		}
+		#panel .buffer.focus{
+			background-image: url(../image/ic_play_buffer_s.png);
+		}
+		#panel .next{
+			background-image: url(../image/ic_play_next.png);
+		}
+		#panel .next.focus{
+			background-image: url(../image/ic_play_next_s.png);
+		}
+		#panel .download{
+			background-image: url(../image/ic_play_download.png);
+		}
+		#panel .download.focus{
+			background-image: url(../image/ic_play_download_s.png);
+		}
+		#chat{
+			overflow: hidden; border-top: 1px solid #845253;
+		}
+		#chat a{
+			float: right; padding: 10px; font-size: 12px; color: #ccc;
+		}
+
+		#main .wrap{
+			position: absolute; margin:auto; width: 100%;
+			bottom: 0; top: 0; height: 60px;
+		}
+		#main h1{
+			font-size: 20px; color: #fff; text-align: center;
+		}
+		#main label{
+			display: block; text-align: center; font-size: 14px;
+			color: #ccc; padding-top: 20px;
+		}
+	</style>
+</head>
+<body>
+<div id="wrap">
+	<header>
+		<i class="back" tapmode onclick="closeWin()"></i>
+		<div>MGSex电台</div>
+		<i class="more"></i>
+	</header>
+    <div id="main">
+    	<div class="wrap">
+    		<h1 id="title"></h1>
+    		<!--<label>主播 杰森 AsiaFM</label>-->
+    	</div>
+    </div>
+    <!--<ul id="action">
+		<li class="collect" tapmode="focus">收藏</li>
+		<li class="timer" tapmode="focus">定时</li>
+		<li class="share" tapmode="focus">分享</li>
+		<li class="checkin" tapmode="focus">签到</li>
+	</ul>-->
+    <div id="control">
+    	<div id="slider">
+    		<span id="s" class="s"></span>
+    		<span id="e" class="e"></span>
+    	</div>
+		<ul id="panel">
+			<li class="list" tapmode="focus" onclick="listCuo()"></li>
+			<li class="prev" onclick="listCuo()"></li>
+			<li id="ispay" class="play" onclick="playRadio()"></li>
+			<li class="next" onclick="listCuo()"></li>
+			<li class="download" tapmode="focus"></li>
+		</ul>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="../script/api.js"></script>
+<script type="text/javascript" src="../script/zepto.js"></script>
+<script type="text/javascript" src="../script/apilite.js"></script>
+<script type="text/javascript">
+
+
+  apiready = function(){
+    document.getElementById('title').innerHTML = api.pageParam.title;
+  	var header = document.querySelector('header');
+    $api.fixIos7Bar(header);
+    api.setStatusBarStyle({
+        style: 'dark',
+        color: 'rgba(0,0,0,0)'
+    });
+    api.showProgress({
+        title: '努力加载中...',
+        text: '福利正在赶路...',
+        modal: false
+    });
+    setTimeout("playRadio();",2000);
+
+
+  }
+
+  function listCuo(){
+    api.toast({
+        msg: '播放列表为空！',
+        duration: 1000,
+        location: 'middle'
+    });
+  }
+
+  //进度条
+  function jinDutiao(){
+    var $slider = $('#slider');
+    var sliderPos = $slider.offset();
+    var obj = api.require('slider');
+    obj.open({
+         x: 0,
+         y: sliderPos.top + 10,
+         w: api.winWidth,
+         bgImg: "widget://image/slider/slider-bg.png",
+         selectedBgImg: "widget://image/slider/slider-fg.png",
+         bar: {
+          barWidth: 20,
+          barHeight: 20,
+          barImg: "widget://image/slider/slider-btn.png"
+         },
+         bubble: {
+          bubbleWidth: 0,
+          bubbleHeight: 0
+         },
+         minValue: 0,
+         maxValue: stime,
+         defValue: 0,
+         fixed: true
+    },function(ret,err){
+        if(ret.touchCancel){
+            var baif = GetPercent(ret.value, stime);
+            weizhi(parseInt(baif));
+        }
+    });
+  }
+  var stime = null;
+
+  //播放
+  function playRadio(){
+    var audio = api.require('audio');
+    api.hideProgress();
+    audio.play({
+        path: api.pageParam.url
+    }, function(ret, err) {
+        if (ret) {
+            stime = ret.duration;
+            document.getElementById('ispay').className = 'pause';
+            var s = document.getElementById('s');
+            var e = document.getElementById('e');
+            var etime = ret.current;
+            jinDutiao();
+            s.innerHTML = formatTime(stime);
+            e.innerHTML = formatTime(etime);
+            document.getElementById('ispay').onclick = function(){ pauseRadio(); };
+            var slider = api.require('slider');
+            slider.setValue({
+                id: -1,
+                value: ret.current
+            });
+            if (ret.complete) {
+              document.getElementById('ispay').className = 'play';
+              document.getElementById('ispay').onclick = function(){ playRadio(); };
+            }
+        } else {
+            alert('翻车了！文件走丢了');
+        }
+    });
+  }
+
+  //暂停
+  function pauseRadio(){
+    document.getElementById('ispay').className = 'play';
+    document.getElementById('ispay').onclick = function(){ playRadio(); };
+    var audio = api.require('audio');
+    audio.pause();
+  }
+
+  //设置播放位置
+  function weizhi(value){
+    var audio = api.require('audio');
+    audio.setProgress({
+        progress: value
+    });
+  }
+
+  //格式化秒数
+  function formatTime(seconds) {
+    var min = Math.floor(seconds / 60),
+        second = seconds % 60,
+        hour, newMin, time;
+
+    if (min > 60) {
+        hour = Math.floor(min / 60);
+        newMin = min % 60;
+    }
+
+    if (second < 10) { second = '0' + second;}
+    if (min < 10) { min = '0' + min;}
+
+    return time = hour? (hour + ':' + newMin + ':' + second) : (min + ':' + second);
+  }
+
+  //计算百分比
+  function GetPercent(num, total) {
+    num = parseFloat(num);
+    total = parseFloat(total);
+    return total <= 0 ? "0%" : (Math.round(num / total * 10000) / 100.00 );
+  }
+
+  function closeWin(){
+
+    api.closeWin({
+
+    });
+
+  }
+
+
+
+
+
+
+</script>
+</html>

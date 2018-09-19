@@ -1,0 +1,138 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <link rel="stylesheet" href="../css/live.css">
+    <title>title</title>
+
+
+    <script type="text/javascript" src="../script/vue.js" ></script>
+
+</head>
+<body>
+
+  <div id="livetop" class="live-top">
+    <!--<div class="live-top-r" tapmode onclick="closeWin()">
+      <img src="../image/guanbi.png">
+    </div>-->
+    <div class="live-top-box">
+
+      <img id="pic" class="live-top-box-img" src="../image/error-img.jpg">
+      <div id="name" class="live-top-box-name">
+        MG
+      </div>
+    </div>
+
+  </div>
+  <div id="livebt" class="live-bt">
+  </div>
+  <div id="vue-content">
+      <div id="mengban" style="text-align: center;" :class="giftName">
+          <img src="../image/" alt="" style="width: 50%;margin-top: 70px;"/>
+      </div>
+      <div class="wrap">
+          <ul>
+              <li class="announcement" v-html="announcement"></li>
+          </ul>
+          <div id="message">
+              <ul id="inputUl">
+
+                  <li v-for="item in inputList" class="message-list"> <span class="nickname">{{nickname}} </span>: {{item}}</li>
+
+              </ul>
+          </div>
+      </div>
+
+      <div id="livebtn">
+          <input id="inputV" v-model="inputValue" type="text"/>
+          <div class="live-bt-r" tapmode onclick="closeWin()">
+              <img src="../image/guanbi.png">
+          </div>
+          <div class="live-btn-m">
+              <div class="m"> <img src="../image/love.png" class="journal-reward" /> </div>
+          </div>
+		  
+          <div class="live-btn-r"  @click="handelClick">
+              <img src="../image/fasong.png">
+          </div>
+
+      </div>
+  </div>
+
+</body>
+<script>
+    new Vue({
+        el:"#vue-content",
+        data:{
+            giftName:"",
+            height:"",
+            inputValue:"",
+            nickname:"MG",
+            inputList:[],
+            announcement:"系统消息:欢迎来到直播间.请勿相信直播间广告，上当受骗后果自负，祝君愉快玩耍，细细品味。"
+        },
+        methods:{
+            handelClick:function(){
+                this.inputList.push(this.inputValue);
+                this.inputValue="";
+                var height1=document.getElementById("inputUl").offsetHeight;
+                var height2=document.getElementById("message").offsetHeight;
+                var height = height2-height1-24;
+//                console.log(height);
+                if(height<=0){
+                    document.getElementById("inputUl").style.marginTop = height+"px";
+                }
+
+            },
+            giftClick:function(){
+                if(this.giftName==""){
+                    this.giftName="active";
+                }else{
+                    this.giftName="";
+                }
+
+            }
+        }
+    })
+</script>
+<script type="text/javascript" src="../script/api.js" ></script>
+<script type="text/javascript">
+    apiready = function(){
+
+      api.setStatusBarStyle({
+          style: 'light',
+          color: 'rgba(0,0,0,0)'
+      });
+
+      api.parseTapmode();
+      var pic = $api.byId('pic');
+      var name = $api.byId('name');
+      pic.src = api.pageParam.pic;
+      name.innerHTML = api.pageParam.name;
+    }
+
+
+
+    function closeWin(){
+
+      api.closeWin({
+      });
+    }
+
+    function toJubao(){
+      api.toast({
+          msg: '我们已收到您对该房间内容的举报，并推送您的举报信息到运营商和云服务提供商！',
+          duration: 3000,
+          location: 'middle'
+      });
+
+    }
+
+
+</script>
+<script src="http://www.jq22.com/jquery/jquery-2.1.1.js" type="text/javascript" charset="utf-8"></script>
+<script src="../script/flutter-hearts-zmt.js" type="text/javascript" charset="utf-8"></script>
+</script>
+</html>
